@@ -1,0 +1,16 @@
+{
+  "name": "atlas-onboarding-chatbot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Independent, privacy-conscious onboarding chatbot prototype.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:ollama": "USE_OLLAMA=true node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

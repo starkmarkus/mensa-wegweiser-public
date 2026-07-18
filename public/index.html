@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atlas</title>
+    <link rel="icon" type="image/svg+xml" href="/atlas-mark.svg" />
+    <link rel="apple-touch-icon" href="/atlas-mark.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="accessGate" class="access-gate" aria-label="Zugangsschutz">
+        <div class="access-card">
+          <p class="access-eyebrow">Atlas Beta</p>
+          <h2>Geschützter Prototyp</h2>
+          <p class="access-copy">
+            Dieses Tool ist ein Prototyp für Tests mit ausgewählten Personen. Für den Zugriff ist ein Passwort nötig.
+            Aufgrund begrenzter AI-Credits kann der Zugang und die Antwortverfügbarkeit zeitweise eingeschränkt sein.
+          </p>
+          <form id="accessForm" class="access-form">
+            <label class="sr-only" for="accessPasswordInput">Passwort</label>
+            <input id="accessPasswordInput" type="password" autocomplete="current-password" placeholder="Passwort" />
+            <button type="submit">Zugang öffnen</button>
+          </form>
+          <p id="accessError" class="access-error" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="chat-panel" aria-label="Chat">
+        <header class="topbar">
+          <div class="topbar-inner">
+            <div class="brand-lockup">
+              <img src="/atlas-mark.svg" alt="" class="brand-mark" />
+              <div>
+                <div class="title-row">
+                  <h1>Atlas</h1>
+                  <span class="beta-badge">Beta</span>
+                  <button id="infoButton" class="info-button" type="button" aria-label="Informationen zum Bot" title="Informationen zum Bot">
+                    <span aria-hidden="true">i</span>
+                  </button>
+                </div>
+                <p class="prototype-note">Unabhängiger Prototyp für die Orientierung neuer Mitglieder. Antworten sind unverbindlich.</p>
+              </div>
+            </div>
+            <button id="feedbackButton" class="feedback-button" type="button">Feedback</button>
+            <div class="topbar-actions">
+              <div class="location-context">
+                <label for="postcodeInput">PLZ</label>
+                <input id="postcodeInput" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="z. B. 80331" />
+                <span id="locsecBadge" class="locsec-badge" aria-live="polite">LocSec nach PLZ</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="pristine-stage">
+          <div id="homeStage" class="home-stage" aria-hidden="false">
+            <h2><span class="home-stage-line">Willkommen bei Mensa!</span> <span class="home-stage-line">Wobei kann ich dir helfen?</span></h2>
+          </div>
+
+          <div class="bottom-dock">
+            <div class="suggestions" aria-label="Beispielfragen">
+              <button type="button">Was sind die wichtigsten Tools?</button>
+              <button type="button">Welche Websites sind für den Einstieg hilfreich?</button>
+              <button type="button">Ich bin neu. Was sollte ich zuerst tun?</button>
+              <button type="button">Wie finde ich Treffen in meiner Nähe?</button>
+              <button type="button">Kann ich einfach zu einem Treffen gehen?</button>
+              <button type="button">Was ist ein LocSec?</button>
+              <button type="button">Welche Region ist für meine PLZ zuständig?</button>
+              <button type="button">Muss ich mich für Treffen anmelden?</button>
+              <button type="button">Was schreibe ich meinem lokalen Kontakt?</button>
+              <button type="button">Wen kontaktiere ich bei Fragen?</button>
+              <button type="button">Was sind SIGs?</button>
+            </div>
+
+            <form id="chatForm" class="composer">
+              <label class="sr-only" for="questionInput">Frage</label>
+              <div id="questionGhost" class="question-ghost" aria-hidden="true"></div>
+              <textarea id="questionInput" name="question" rows="1" maxlength="1600" placeholder="Nachricht an Atlas"></textarea>
+              <button class="send-button" type="submit" aria-label="Senden" title="Senden">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m5 12 14-7-4 14-3-6-7-1Z" />
+                  <path d="m12 13 7-8" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite" aria-hidden="true"></div>
+      </section>
+
+      <div id="botInfoModal" class="info-modal" hidden aria-hidden="true">
+        <button class="info-backdrop" type="button" data-info-close aria-label="Informationen schließen"></button>
+        <section class="info-dialog" role="dialog" aria-modal="true" aria-labelledby="botInfoTitle">
+          <button id="botInfoClose" class="info-close" type="button" aria-label="Schließen">×</button>
+          <p class="info-eyebrow">Über Atlas</p>
+          <h2 id="botInfoTitle">Was du wissen solltest</h2>
+          <div class="info-grid">
+            <section>
+              <h3>Datenschutz und Funktionsweise</h3>
+              <p>Datenschutz hat bei Atlas hohe Priorität. Deine Anfrage wird nur verarbeitet, um eine passende Antwort zu erzeugen. Die Postleitzahl wird ausschließlich im laufenden Chat für die regionale Zuordnung genutzt. Chatverläufe werden standardmäßig nicht gespeichert. Die öffentliche Demo enthält ausschließlich eine kleine, selbst formulierte Beispiel-Wissensbasis. Für offenere oder komplexere Fragen kann Atlas optional an ein konfiguriertes Sprachmodell angebunden werden.</p>
+            </section>
+            <section>
+              <h3>Projektstatus</h3>
+              <p>Atlas ist ein unabhängiger Beta-Prototyp für die Orientierung in einer mitgliederbasierten Community. Die öffentliche Version dient ausschließlich als Demonstration und ist kein offizielles Angebot einer Organisation.</p>
+            </section>
+          </div>
+        </section>
+      </div>
+
+      <div id="feedbackModal" class="info-modal" hidden aria-hidden="true">
+        <button class="info-backdrop" type="button" data-feedback-close aria-label="Feedback schließen"></button>
+        <section class="info-dialog feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle">
+          <button id="feedbackClose" class="info-close" type="button" aria-label="Schließen">×</button>
+          <p class="info-eyebrow">Feedback</p>
+          <h2 id="feedbackTitle">Hilf mit, Atlas besser zu machen</h2>
+          <p class="feedback-intro">Schreib kurz, was hilfreich war, was gefehlt hat oder wo Atlas falsch lag.</p>
+          <form id="feedbackForm" class="feedback-form">
+            <label for="feedbackMessage">Feedback</label>
+            <textarea id="feedbackMessage" name="message" rows="5" maxlength="2000" required placeholder="Was sollte Atlas besser machen?"></textarea>
+            <label for="feedbackEmail">E-Mail</label>
+            <input id="feedbackEmail" name="email" type="email" autocomplete="email" maxlength="320" placeholder="Optional für Rückfragen" />
+            <label class="sr-only" for="feedbackCompany">Firma</label>
+            <input id="feedbackCompany" class="feedback-company" name="company" autocomplete="off" tabindex="-1" />
+            <button type="submit">Feedback senden</button>
+            <p id="feedbackStatus" class="feedback-status" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
